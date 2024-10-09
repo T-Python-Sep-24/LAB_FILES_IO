@@ -38,9 +38,14 @@ def show_todolist():
             else:
                 print("There is nothing in your Todolist")
                 return
-            for index,todo in enumerate(todo_list,start=1):
-                status="Done" if todo['status']else"Not Done"
-                print(f"{index}. {todo['title']} ({todo['date']}) - {status}")
+            if todo_list:
+                for index,todo in enumerate(todo_list,start=1):  
+                    status="Done" if todo['status']else"Not Done"
+                    print(f"{index}. {todo['title']} ({todo['date']}) - {status}")
+            else:
+                print("there is no tasks in your list")
+              
+                
     
 
 def mark_done():
