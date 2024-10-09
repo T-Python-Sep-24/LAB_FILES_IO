@@ -15,15 +15,18 @@ def readTodo() -> str:
     This function retreives the to do list from the file then returns it
     '''
     todoListFormatted:str = "Your To-Do list:\n"
-    with open("ToDo/to_do.txt", "r", encoding="utf-8") as file:
-        #Read from the file line by line and store in a list
-        todoList: list = file.readlines()
-        #Make sure list isn't empty
+    #Make sure file exists 
+    if path.isfile("ToDo/to_do_bonus.json"):
+        with open("ToDo/to_do.txt", "r", encoding="utf-8") as file:
+            #Read from the file line by line and store in a list
+            todoList: list = file.readlines()
+            #Make sure list isn't empty
         if todoList != []:
             for i, todo in enumerate(todoList):
                 todoListFormatted += f"{i + 1}. {todo}"
-    
-    return todoListFormatted
+        return todoListFormatted
+    else:
+        return "File doesn't exist."
 
 #--------------Bonus--------------
 def addTodoBonus(todo: str, date: str, time: str):
@@ -33,7 +36,7 @@ def addTodoBonus(todo: str, date: str, time: str):
     todoList: dict = {}
     #Make sure the file exists to avoid errors
     if path.isfile("ToDo/to_do_bonus.json"):
-        #Load the existing data from the json file if it exists
+        #Load the existing data from the json file
         with open("ToDo/to_do_bonus.json", "r", encoding="utf-8") as file:
             todoList = json.load(file)
 
