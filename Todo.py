@@ -6,10 +6,7 @@ def read_file():
         try:
             with open('Todo_list.json','r',encoding="UTF-8")as file:
              todo_list=json.load(file)
-             if todo_list:
-                return todo_list
-             else:
-                  return None
+             return todo_list
         except Exception as e:
             print(e.__class__)
 
