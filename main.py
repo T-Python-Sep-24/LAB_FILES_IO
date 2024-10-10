@@ -17,8 +17,10 @@ def to_do_list():
             elif ans.upper() == "N":
                 to_do_list()
             elif ans.upper() == "EXIT":
+                print("thank you for using the To-Do program, come back again soon")
                 break
         elif answer.upper() == "EXIT":
+            print("thank you for using the To-Do program, come back again soon")
             break
         else:
             print("enter a valid answer (y or n)")
