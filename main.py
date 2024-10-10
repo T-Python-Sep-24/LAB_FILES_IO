@@ -1,5 +1,5 @@
 from ToDo.todoOP import addTodo, readTodo, addTodoBonus, readTodoBonus, markAsDone, searchByTitle
-import re
+from datetime import datetime
 
 def main():
     '''
@@ -37,19 +37,6 @@ def main():
             input("")
 
 #-----Bonus-----
-def validateDatetime(date: str, time: str) -> str:
-    '''
-    This function validates date and time strings using regular expressions
-    '''
-    datePattern = "^[0-9]{1,2}\\-[0-9]{1,2}\\-[0-9]{4}$"
-    timePattern = "^[0-5][0-9]\\:[0-5][0-9]$"
-    if not re.match(datePattern, date):
-        return "Invalid date format, only (dd-mm-yyyy) is allowed."
-    elif not re.match(timePattern, time):
-        return "Invalid time format, only (hh:mm) is allowed."
-    else:
-        return ""
-
 def bonusMain():
     '''
     Main function for bonus solution operations
@@ -67,13 +54,18 @@ def bonusMain():
                 print("When do you want to do it? ")
                 date: str = input("Date (dd-mm-yyyy): ")
                 time: str = input("Time (hh:mm): ")
-                errorMsg: str = validateDatetime(date, time)
-                if errorMsg == "":
-                    addTodoBonus(todo, date, time)
-                    break
+                dateNtime = f"{date} {time}"
+                pattern ='%d-%m-%Y %H:%M'
+                try:
+                    datetime.strptime(dateNtime, pattern)
+                except ValueError:
+                    print("Invalid date or time format. Make sure format is (dd-mm-yyyy) for date and (hh:mm) for time.")
+                except Exception as e:
+                    print("An error occured, ", e)
                 else:
-                    print(errorMsg)            
-                
+                    addTodoBonus(todo, dateNtime)
+                    break
+
         elif choice == '2':
             todo: str = input("Please write the To-Do item you want to mark as done: ")
             msg = markAsDone(todo)
@@ -100,7 +92,7 @@ def bonusMain():
             input("")
 
 #Execute main function
-main()
+#main()
 
 #To execute bonus function remove comment
-#bonusMain()
+bonusMain()

@@ -1,5 +1,6 @@
 #For bonus, import json module
 import json
+from datetime import datetime
 
 def addTodo(todo: str):
     '''
@@ -32,7 +33,7 @@ def readTodo() -> str:
     return todoListFormatted
 
 #--------------Bonus--------------
-def addTodoBonus(todo: str, date: str, time: str):
+def addTodoBonus(todo: str, dateTime: str):
     '''
     This function takes todo as args and writes it to a file using json module
     '''
@@ -45,11 +46,10 @@ def addTodoBonus(todo: str, date: str, time: str):
     except FileNotFoundError:
         return "Your To-Do list is empty."
     except Exception as e:
-        return f"{e.__class__}"
-    else:
+        return f"An error occured, {e.__class__}"
+    finally:
         todoList[todo]= {
-            'date': date,
-            'time': time,
+            'dateTime': dateTime,
             'done': False
         }
         with open("ToDo/to_do_bonus.json", "w", encoding="utf-8") as file:
@@ -73,7 +73,7 @@ def readTodoBonus() -> str:
         return f"{e.__class__}"
     else:
         for i, todo in enumerate(todoList):
-            todoListFormatted += f"{i + 1}. {todo} ({todoList[todo]['date']} {todoList[todo]['time']}) - {'Done' if todoList[todo]['done'] else 'Not done'}\n"
+            todoListFormatted += f"{i + 1}. {todo} ({todoList[todo]['dateTime']}) - {'Done' if todoList[todo]['done'] else 'Not done'}\n"
         return todoListFormatted
 
 def markAsDone(todo: str) -> str: 
@@ -120,7 +120,7 @@ def searchByTitle(todo: str) -> str:
         return f"{e.__class__}"
     else:
         if todo in todoList:
-            todoInfo = f"- {todo} ({todoList[todo]['date']} {todoList[todo]['time']}) - {'Done' if todoList[todo]['done'] else 'Not done'}"
+            todoInfo = f"- {todo} ({todoList[todo]['dateTime']}) - {'Done' if todoList[todo]['done'] else 'Not done'}"
         else: 
             todoInfo = f"'{todo}' isn't on your To-Do list."
 
