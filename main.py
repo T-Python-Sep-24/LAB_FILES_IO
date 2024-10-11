@@ -59,7 +59,7 @@ def bonusMain():
                 try:
                     datetime.strptime(dateNtime, pattern)
                 except ValueError:
-                    print("Invalid date or time format. Make sure format is (dd-mm-yyyy) for date and (hh:mm) for time.")
+                    print("Invalid date or time. Make sure format is (dd-mm-yyyy) for date and (hh:mm) for time.")
                 except Exception as e:
                     print("An error occured, ", e)
                 else:
