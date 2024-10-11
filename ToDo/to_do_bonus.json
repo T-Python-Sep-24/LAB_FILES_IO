@@ -1,12 +1,10 @@
 {
     "go to the airport": {
-        "date": "10-10-2024",
-        "time": "20:00",
+        "dateTime": "10-10-2024 20:00",
         "done": false
     },
     "make cookies": {
-        "date": "10-10-2024",
-        "time": "18:00",
+        "dateTime": "10-10-2024 18:00",
         "done": true
     }
 }
