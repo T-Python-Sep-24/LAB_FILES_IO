@@ -1,17 +1,9 @@
 import json
 from datetime import datetime
 
-def addTask():
+def addTask(tasksDict: dict):
     ''' add task to JSON file'''
     print("\n---------- Adding a Task ----------")
-    # check if there is existing data pull it or create new dict
-    try:
-        with open("to_do.json", "r") as file:
-            existingData: dict = json.load(file)
-    except FileNotFoundError:
-        existingData = {}
-
-
     # ask the user to type in his new To-Do item . 
     item_title: str = input("Type in a new To-Do item: ")
     # creat a dict for the item
@@ -23,24 +15,17 @@ def addTask():
         "item_done": item_done,
         "item_dateTime": item_dateTime 
     }
-    # add new data to the existing dict using title as key
-    existingData[item_title] = newTask
-
-    # save that To-Do item inside the a file to_do.json
-    with open("to_do.json", "w") as file:
-        json.dump(existingData, file, indent = 4)
-    print("++++++++++ To-do item was successfully added ++++++++++\n")
+    # add the new data to the dict using title as key
+    tasksDict[item_title] = newTask
 
 
-def listTasks():
+def listTasks(tasksDict):
     ''' asks if user wants to list his To-Do items '''
     print("\n---------- Listing the Tasks ----------")
-    # check if there is existing data or print aproprite message
-    try:
-        with open("to_do.json", "r") as file:
-            tasks: dict = json.load(file)
 
-            for index, (title, task) in enumerate(tasks.items(), start=1):
+    # check if there is existing data or print aproprite message
+    if len(tasksDict) > 0:
+        for index, (title, task) in enumerate(tasksDict.items(), start=1):
                 if not task['item_done']:
                     item_status:str = "Not Done"
                 else:
@@ -48,71 +33,48 @@ def listTasks():
                     
                 print(f"{index}. {title} ({task['item_dateTime']}) - {item_status}")
         input("")
-    except FileNotFoundError as e:
+    else:
+        pass
         print("You don't have any Tasks")
         input("")
-    except Exception as e:
-        print("Something went wrong... {e}")
-        input("")
 
 
-def markTask():
+def markTask(tasksDict):
     ''' mark a specific task as done '''
     print("\n---------- Marking a Task as Done ----------")
-
     item_title = input("Type a task title to mark it as done: ")
 
-    # check if there is existing data pull it or create new dict
-    try:
-        with open("to_do.json", "r") as file:
-            existingData: dict = json.load(file)
-    except FileNotFoundError:
-        print("You don't have any Tasks")
-    except Exception as e:
-        print("Something went wrong... {e}")
-        input("")
-
-    if item_title in existingData.keys():
+    if item_title in tasksDict.keys():
         # change task to done if not alreadey
-        if existingData[item_title]["item_done"] == False:
-            existingData[item_title]["item_done"] = True
-            # update json file
-            with open("to_do.json", "w") as file:
-                json.dump(existingData, file, indent = 4)
+        if tasksDict[item_title]["item_done"] == False:
+            tasksDict[item_title]["item_done"] = True
             print("++++++++++ The task marked as done successfully ++++++++++\n")
             input("")
         else:
-            pass
             print("The task already marked as done")
             input("")
     else:
         print("The title doesn't exist")
         input("")
 
-def searchTasks():
+
+def searchTasks(tasksDict):
     ''' search a specific task by title '''
     print("\n---------- Searching a Task by Title ----------")
-
     item_title = input("Type a task title to search for: ")
 
-    # check if there is existing data show the task
-    try:
-        with open("to_do.json", "r") as file:
-            existingData: dict = json.load(file)
-            if item_title in existingData.keys():
-                # change task to done
-                print("Task is found: ")
-                task = existingData[item_title]
-                if not task['item_done']:
-                    item_status:str = "Not Done"
-                else:
-                    item_status:str = "Done"
-                print(f"- {item_title} ({task['item_dateTime']}) - {item_status}")
-                print("++++++++++ Searching a task completed successfully ++++++++++\n")
-                input("")
-
-    except FileNotFoundError:
-        print("You don't have any Tasks")
+    # if the task exist show it
+    if item_title in tasksDict.keys():
+        print("Task is found: ")
+        task = tasksDict[item_title]
+        if not task['item_done']:
+            item_status:str = "Not Done"
+        else:
+            item_status:str = "Done"
+        print(f"- {item_title} ({task['item_dateTime']}) - {item_status}")
+        print("++++++++++ Searching a task completed successfully ++++++++++\n")
         input("")
-    except Exception as e:
-        print(f"Something went wrong... {e}")
+    else:
+        print("Task is not found")
+        input("")        
+        

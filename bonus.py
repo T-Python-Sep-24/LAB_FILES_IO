@@ -1,4 +1,7 @@
 import tasksModule
+import readWriteModule
+
+tasksDict: dict = readWriteModule.readJson()
 
 while True:
     print("Pick: \n" +
@@ -10,18 +13,19 @@ while True:
     pick: int = input("Enter: ")
 
     if pick == "1":
-        tasksModule.addTask()
+        tasksModule.addTask(tasksDict)
         
     elif pick == "2":
-        tasksModule.listTasks()
+        tasksModule.listTasks(tasksDict)
 
     elif pick == "3":
-        tasksModule.markTask()
+        tasksModule.markTask(tasksDict)
 
     elif pick == "4":
-        tasksModule.searchTasks()
+        tasksModule.searchTasks(tasksDict)
 
     elif pick == "5":
+        readWriteModule.writeJson(tasksDict)
         print("Thank you for using the To-Do program, come back again soon")
         break
     else:
